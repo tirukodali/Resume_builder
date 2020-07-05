@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> :: Resume Builder Application ::</title>
+	<!-- Css styles -->
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<header>
+		Resume Builder
+	</header>
+	<section class="parent">
+		<!-- Left Child -->
+		<div class="leftChild">
+			
+		</div>
+		
+		<!-- Right Child -->
+		<div class="rightChild">
+			
+		</div>
+	</section>
+</body>
+<script>
+	var param;
+	var query=window.location.search.substring(1).split("?");
+	query.map((item)=>{
+		param=item.split("=");
+		paramValue=parseInt(param[1]);
+	})
+
+	var open=indexedDB.open("Resume builder",1);
+
+	open.onsuccess=function(e){
+		var request=e.target.result;
+		var transaction=request.transaction("form data","readwrite");
+		var storeDB=transaction.objectStore("form data");
+		var finalData=storeDB.get(paramValue);
+		finalData.onsuccess=function(event){
+			console.log(event.target.result);
+			display(event.target.result);
+		}
+		}
+
+var leftChild=document.querySelector(".leftChild");
+var rightChild=document.querySelector(".rightChild");
+		function display(data){
+			var profileIcon=document.createElement("img");
+				profileIcon.src="images/boy.svg";
+				profileIcon.alt=data.name;
+
+				var name=document.createElement("h2");
+				name.textContent=data.name;
+
+				var role=document.createElement("h3");
+				role.textContent=data.role;
+
+				var email=document.createElement("a");
+				email.textContent=data.email;
+				email.href="mailto:"+data.email;
+
+				leftChild.append(profileIcon);
+				leftChild.append(name);
+				leftChild.append(role);
+
+				leftChild.append(email);
+
+				// Right child info
+				var h2=document.createElement("h2");
+				h2.textContent="Career Objective";
+
+				var hr=document.createElement("hr");
+				h2.append(hr);
+
+				var careerInfo=document.createElement("p");
+				careerInfo.textContent=data.career;
+
+				rightChild.append(h2);
+				rightChild.append(careerInfo);
+
+				// Educational qualifications
+				var h2=document.createElement("h2");
+				h2.textContent="Educational qualifications";
+
+				var hr=document.createElement("hr");
+				h2.append(hr);
+
+				
+
+				var ul=document.createElement("ul");
+				data.education.map((edu)=>{
+					var degree=document.createElement("li");
+					degree.style.fontWeight="550";
+					degree.textContent=edu.degree+" ("+edu.branch+" )";
+					
+
+					var college=document.createElement("p");
+					college.textContent=edu.college;
+
+					var marks=document.createElement("p");
+					marks.textContent=edu.marks+"%";
+
+					ul.append(degree);
+					ul.append(college);
+					ul.append(marks);
+				})
+
+				rightChild.append(h2);
+				rightChild.append(ul);
+
+				var h2=document.createElement("h2");
+				h2.textContent="Technical Skills";
+
+				var hr=document.createElement("hr");
+				h2.append(hr);
+
+				rightChild.append(h2);
+				
+				data.tech.map((t)=>{
+					var tdata=document.createElement("span");
+					tdata.textContent=t;
+					rightChild.append(tdata);
+				})
+
+				
+
+		}
+
+</script>
+</html>

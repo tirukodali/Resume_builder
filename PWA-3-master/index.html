@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="images/icons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title> :: Resume Builder Application ::</title>
+	<!-- Css styles -->
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+	<header>
+		Resume Builder <br>
+	</header>
+		<a href="create.html"> <img src="images/add.svg" alt="Add a profile"> </a>
+
+		<!-- Displaying cards -->
+		<section class="parent">
+
+		</section>
+		&copy;
+</body>
+<script src="js/get.js"></script>
+<script>
+	if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', {scope: '/'})
+  .then(function(reg) {
+    // registration worked
+    console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch(function(error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+}
+</script>
+<footer>&copy;copy right 2020</footer>
+</html>
